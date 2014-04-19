@@ -1,6 +1,8 @@
 Django==1.5
 Markdown==2.4
 South==0.8.4
+argparse==1.1
 django-filter==0.7
 djangorestframework==2.3.13
+requests==2.2.1
 wsgiref==0.1.2
