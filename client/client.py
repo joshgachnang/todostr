@@ -35,7 +35,6 @@ class Client(object):
         return tasks
 
     def add_task(self, args):
-        url = "{}{}".format(self._get_base_url(), 'tasks/')
         payload = {
             'title': args,
         }
@@ -50,7 +49,7 @@ class Client(object):
 
 
 class Task(object):
-    def __init__(self, title,  description=None, due_date=None):
+    def __init__(self, title, description=None, due_date=None):
         self.title = title
         self.description = description
         self.due_date = due_date

@@ -1,9 +1,7 @@
-
 # Create your views here.
 from models import Task
 from serializers import TaskSerializer, UserSerializer
 from django.contrib.auth.models import User
-from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import viewsets
 
