@@ -1,5 +1,6 @@
 import argparse
 import json
+import utils
 
 import requests
 
@@ -28,7 +29,7 @@ class Client(object):
         url = "{}{}".format(self._get_base_url(), 'tasks/')
         r = requests.get(url)
         tasks = []
-        print "raw return", r.json()
+        # print "raw return", r.json()
         for task in r.json():
             tasks.append(Task.from_json(task))
 
@@ -36,7 +37,7 @@ class Client(object):
 
     def add_task(self, args):
         payload = {
-            'title': args,
+            'title': " ".join(args),
         }
         response = self.post_to_server(path='tasks/', payload=payload)
         print response.json()
@@ -47,18 +48,38 @@ class Client(object):
     def describe_task(self, args):
         pass
 
+    def list(self):
+        tasks = self.get_tasks()
+        i = 1
+        for task in tasks:
+            print "{color}{num}{end_color}: {title}".format(**{
+                'color': utils.OKBLUE,
+                'num': i,
+                'end_color': utils.ENDC,
+                'title': task.title
+            })
+            i += 1
+
 
 class Task(object):
-    def __init__(self, title, description=None, due_date=None):
+    def __init__(self, title, description=None, due_date=None, archived=False,
+                 completed=None):
         self.title = title
         self.description = description
         self.due_date = due_date
+        self.archived = archived
+        self.completed = completed
 
     @classmethod
     def from_json(cls, data):
         return cls(title=data['title'],
                    description=data.get('title'),
-                   due_date=data.get('due_date'))
+                   due_date=data.get('due_date'),
+                   archived=data.get('archived', False),
+                   completed=data.get('completed'))
+
+    def render(self):
+        return self.title
 
 
 if __name__ == "__main__":
@@ -73,7 +94,7 @@ if __name__ == "__main__":
     client = Client(username='josh', password='password')
 
     if args.command == 'list':
-        client.get_tasks()
+        client.list()
     elif args.command in ['a', 'add']:
         client.add_task(args.args)
     elif args.command in ['d', 'do']:

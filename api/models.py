@@ -8,3 +8,5 @@ class Task(models.Model):
     description = models.TextField(blank=True, null=True, default=None)
     due_date = models.DateTimeField(blank=True, null=True, default=None)
     user = models.ForeignKey(User, related_name='tasks')
+    archived = models.BooleanField(default=False)
+    completed = models.DateTimeField(blank=True, null=True, default=None)

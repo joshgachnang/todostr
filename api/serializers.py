@@ -8,7 +8,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ('id', 'title', 'description')
+        fields = ('id', 'title', 'description', 'archived', 'completed')
         exclude = ('user',)
 
 

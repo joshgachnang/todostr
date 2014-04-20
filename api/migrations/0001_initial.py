@@ -15,6 +15,8 @@ class Migration(SchemaMigration):
             ('description', self.gf('django.db.models.fields.TextField')(default=None, null=True, blank=True)),
             ('due_date', self.gf('django.db.models.fields.DateTimeField')(default=None, null=True, blank=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='tasks', to=orm['auth.User'])),
+            ('archived', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('completed', self.gf('django.db.models.fields.DateTimeField')(default=None, null=True, blank=True)),
         ))
         db.send_create_signal(u'api', ['Task'])
 
@@ -27,6 +29,8 @@ class Migration(SchemaMigration):
     models = {
         u'api.task': {
             'Meta': {'object_name': 'Task'},
+            'archived': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'completed': ('django.db.models.fields.DateTimeField', [], {'default': 'None', 'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'default': 'None', 'null': 'True', 'blank': 'True'}),
             'due_date': ('django.db.models.fields.DateTimeField', [], {'default': 'None', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
